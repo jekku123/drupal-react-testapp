@@ -1,8 +1,21 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
+interface IApiResponse {
+    data: {
+        id: string;
+        type: string;
+        attributes: {
+            title: string;
+            body: {
+                value: string;
+            };
+        };
+    }[];
+}
+
 function App() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<IApiResponse | null>(null);
 
     const fetchData = async () => {
         try {
@@ -11,6 +24,7 @@ function App() {
                 { mode: 'cors' }
             );
             const json = await response.json();
+            console.log(json);
             setData(json);
         } catch (error) {
             console.log(error);
